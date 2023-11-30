@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Day to Day Expenses</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Bootstrap Datepicker CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+    <style>
+        .hidden_row { 
+            display: none; 
+            padding: 0.25rem 0.5rem;
+            font-size: small;
+        } 
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Day to Day Expenses</h1>
+
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs" id="expenseTabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="daily-tab" data-toggle="tab" href="#daily">Daily</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="monthly-tab" data-toggle="tab" href="#monthly">Monthly</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="yearly-tab" data-toggle="tab" href="#yearly">Yearly</a>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content mt-2">
+            <!-- Daily Tab Content -->
+            <div class="tab-pane fade show active" id="daily">
+                <div class="input-group date">
+                    <input type="text" class="form-control" id="dailyDatepicker" placeholder="Select a day">
+                    <!-- <div class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                    </div> -->
+                    <div class="pl-3 pr-2">
+                        <select class="form-control" id="currencySelect" onchange="saveCurrency()">
+                          <option value="₹">₹ - Indian Rupees</option>
+                          <option value="$">$ - US Dollar</option>
+                          <option value="€">€ - Euro</option>
+                          <option value="£">£ - British Pound</option>
+                          <!-- Add more currency options as needed -->
+                        </select>
+                    </div>
+                    <!-- Plus Button to Add Entry -->
+                    <button class="btn btn-success ml-2" data-toggle="modal" data-target="#addEntryModal">
+                        <i class="fas fa-plus"></i> Add Entry
+                    </button>
+
+                    <!-- Balance Table -->
+                    <table id="incomeTable" class="table table-sm table-borderless mt-2">
+                        <thead id="totalBalance">
+                            <tr>
+                              <th class="p-2">C/F</th>
+                              <th class="p-2 text-right">$1750.00</th>
+                            </tr>
+                        </thead>
+                        <thead id="totalIncome" class="thead-light" >
+                            
+                            
+                        </thead>
+                        <tbody id="incomeTableBody">
+
+                        </tbody>
+                    </table>
+                    <table id="expenseTable" class="table table-sm table-borderless mt-1">
+                        <thead id="totalExpense" class="thead-light">
+            
+                        </thead>
+                        <tbody id="expenseTableBody">
+                        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Monthly Tab Content -->
+            <div class="tab-pane fade" id="monthly">
+                <h3>Monthly Expenses</h3>
+                <div class="input-group date">
+                    <input type="text" class="form-control" id="monthlyDatepicker" placeholder="Select a month">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Yearly Tab Content -->
+            <div class="tab-pane fade" id="yearly">
+                <h3>Yearly Expenses</h3>
+                <div class="input-group date">
+                    <input type="text" class="form-control" id="yearlyDatepicker" placeholder="Select a year">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Add Entry -->
+    <div class="modal" id="addEntryModal" tabindex="-1" role="dialog" aria-labelledby="addEntryModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- Tabs for Income and Expense -->
+                    <ul class="nav nav-tabs" id="entryTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="income-tab" data-toggle="tab" href="#income">Income</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="expense-tab" data-toggle="tab" href="#expense">Expense</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab Content for Income and Expense -->
+                    <div class="tab-content mt-2">
+                        <!-- Income Tab Content -->
+                        <div class="tab-pane fade show active" id="income">
+                            <!-- Add your form for adding income entries here -->
+                            <!-- Example: -->
+                            <form id="my-form" onsubmit="addNewIncome(event)" method="post">
+                                <div class="form-group">
+                                    <label for="incomeName">Income Source</label>
+                                    <input type="text" class="form-control" id="incomeName"
+                                        placeholder="Enter income source">
+                                </div>
+                                <div class="form-group">
+                                    <label for="incomeAmount">Amount</label>
+                                    <input type="text" class="form-control" id="incomeAmount"
+                                        placeholder="Enter income amount">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <input type="text" class="form-control" id="incomeDescription"
+                                        placeholder="Enter expense amount">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Income</button>
+                            </form>
+                        </div>
+
+                        <!-- Expense Tab Content -->
+                        <div class="tab-pane fade" id="expense">
+                            <!-- Add your form for adding expense entries here -->
+                            <!-- Example: -->
+                            <form id="my-form" onsubmit="addNewExpense(event)" method="post">
+                                <div class="form-group">
+                                    <label for="expenseName">Expense Category</label>
+                                    <input type="text" class="form-control" id="expenseName"
+                                        placeholder="Enter expense category">
+                                </div>
+                                <div class="form-group">
+                                    <label for="expenseAmount">Amount</label>
+                                    <input type="text" class="form-control" id="expenseAmount"
+                                        placeholder="Enter expense amount">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <input type="text" class="form-control" id="description"
+                                        placeholder="Enter expense amount">
+                                </div>
+                                <button type="submit" class="btn btn-danger">Add Expense</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-U7jA7vRfhNfN1foeCwyd8lLVdZkvZ9SMEs5EAKFj6lIbbVdQT3Bz2KR3LWFMbT1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Datepicker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Font Awesome JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+        integrity="sha384-dNs4fHqOhAExN87HVG9smNjk/xJ0HbJlEy1XaBh1lCKW7Fd+6aD/wzXt34RiYIeU"
+        crossorigin="anonymous"></script>
+
+    <!-- Initialize Datepickers -->
+    <script>
+
+    </script>
+
+    <script src="../js/expense.js"></script>
+    <script src="../js/income.js"></script>
+    
+</body>
+
+</html>
