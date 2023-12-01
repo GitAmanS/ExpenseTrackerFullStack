@@ -33,7 +33,7 @@ async function loginForm(e) {
       window.location.href = "../views/expensePage.html";
     }
   } catch (error) {
-    console.log(error.response.status);
+    console.log(error);
 
     if (error.response.status === 404) {
       let unsuccessful = document.getElementById("loginunSuccessfull");

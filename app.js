@@ -6,8 +6,8 @@ const sequelize = require("./util/database");
 const incomeRouter = require("./routes/incomeRouter");
 const expenseRotuer = require("./routes/expenseRouter");
 
-const expense = require("./models/expenseModel");
-const income = require("./models/incomeModel");
+const Expense = require("./models/expenseModel");
+const Income = require("./models/incomeModel");
 const User = require("./models/userModel");
 const Order = require("./models/ordersModel");
 
@@ -31,15 +31,15 @@ app.use("/expense", userauthentication.authenticate, expenseRotuer);
 app.use("/purchase", purchaseMembershipRouter);
 app.use("/premium", premiumFeatureRouter);
 
-User.hasMany(income);
-income.belongsTo(User);
+User.hasMany(Income);
+Income.belongsTo(User);
 
 User.hasMany(Order);
 Order.belongsTo(User);
 
 
-User.hasMany(expense);
-expense.belongsTo(User);
+User.hasMany(Expense);
+Expense.belongsTo(User);
 
 sequelize
   .sync()

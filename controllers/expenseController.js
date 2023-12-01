@@ -18,7 +18,7 @@ const addExpense = async (req, res, next) => {
         ExpenseAmount: ExpenseAmount,
         ExpenseDescription: ExpenseDescription,
         ExpenseCategory: ExpenseCategory,
-        userId: req.user.id,
+        UserId: req.user.id,
         ExpenseDate: ExpenseDate,
       },
       { transaction: t }
@@ -123,7 +123,7 @@ const getAllExpenses = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      err: err,
+      err: err, userId: req.user.id,
     });
   }
 };

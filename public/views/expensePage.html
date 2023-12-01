@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Day to Day Expenses</title>
+    
 
+    <title>Day to Day Expenses</title>
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -26,7 +28,10 @@
 
 <body>
 
-    <div class="container mt-5">
+    <div class="container mt-3">
+        <button id="rzp-button1" onclick=" buyPremium(event)" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Buy Premium
+        </button>
         <h1 class="text-center">Day to Day Expenses</h1>
 
         <!-- Navigation Tabs -->
@@ -68,10 +73,7 @@
                     <!-- Balance Table -->
                     <table id="incomeTable" class="table table-sm table-borderless mt-2">
                         <thead id="totalBalance">
-                            <tr>
-                              <th class="p-2">C/F</th>
-                              <th class="p-2 text-right">$1750.00</th>
-                            </tr>
+                            
                         </thead>
                         <thead id="totalIncome" class="thead-light" >
                             

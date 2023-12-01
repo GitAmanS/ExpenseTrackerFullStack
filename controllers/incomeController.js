@@ -18,7 +18,7 @@ const addIncome = async (req, res, next) => {
         IncomeAmount: IncomeAmount,
         IncomeDescription: IncomeDescription,
         IncomeCategory: incomeCategory,
-        userId: req.user.id,
+        UserId: req.user.id,
         IncomeDate: incomeDate,
       },
       { transaction: t }

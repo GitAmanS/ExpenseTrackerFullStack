@@ -51,33 +51,34 @@ const generateAccessToken = (id, name, isPremiumUser) => {
 };
 const postUserLogin = async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const existingUser = await UserModel.findOne({ where: { email: email } });
+
     if (existingUser) {
-      bcrypt.compare(password, existingUser.password, (err, result) => {
-        if (err) {
-          res.status(500).json({ error: "somthing went wrong" });
-        }
-        if (result == true) {
-          res.status(200).json({
-            message: "user logged in succesfully",
-            token: generateAccessToken(
-              existingUser.id,
-              existingUser.name,
-              existingUser.isPremiumUser
-            ),
-          });
-        } else {
-          res.status(401).json({ error: "User not authorized" });
-        }
-      });
+      const passwordMatch = await bcrypt.compare(password, existingUser.password);
+
+      if (passwordMatch) {
+        res.status(200).json({
+          message: "User logged in successfully",
+          token: generateAccessToken(
+            existingUser.id,
+            existingUser.name,
+            existingUser.isPremiumUser
+          ),
+        });
+      } else {
+        res.status(401).json({ error: "User not authorized" });
+      }
     } else {
-      res.status(404).json({ error: "User Not Found" });
+      res.status(404).json({ error: "User not found" });
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    res.status(500).json({ error: "Something went wrong" });
   }
 };
+
 module.exports = {
   postUserSignUp,
   getLoginPage,
