@@ -1,14 +1,14 @@
-const Rozarpay = require("razorpay");
+const Razorpay = require("razorpay");
 const orderModel = require("../models/ordersModel");
 const userController = require("./userController");
 
 const purchasepremium = async (req, res) => {
   try {
-    var rzp = new Rozarpay({
+    var rzp = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
-    const amount = 2500;
+    const amount = 500;
 
     rzp.orders.create({ amount, currency: "INR" }, (err, order) => {
       if (err) {
@@ -32,7 +32,6 @@ const purchasepremium = async (req, res) => {
 const updateTransactionStatus = async (req, res) => {
   try {
     const { payment_id, order_id } = req.body;
-    // console.log("payentId>>>>" + payment_id);
     const order = await orderModel.findOne({ where: { orderid: order_id } });
     const promise1 = order.update({ paymentid: payment_id });
     const promise2 = req.user.update({ isPremiumUser: true });

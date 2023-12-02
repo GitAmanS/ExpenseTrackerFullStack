@@ -29,6 +29,7 @@
 <body>
 
     <div class="container mt-3">
+        <h5 id="message"></h5>
         <button id="rzp-button1" onclick=" buyPremium(event)" class="btn btn-primary">
             <i class="fas fa-plus"></i> Buy Premium
         </button>
@@ -45,10 +46,15 @@
             <li class="nav-item">
                 <a class="nav-link" id="yearly-tab" data-toggle="tab" href="#yearly">Yearly</a>
             </li>
-        </ul>
+            <li class="nav-item">
+                <a class="nav-link" id="leaderboard-tab" data-toggle="tab"href="#leaderboardtab">Leaderboard</a>
+            </li>
 
+        </ul>
+        
         <!-- Tab Content -->
         <div class="tab-content mt-2">
+
             <!-- Daily Tab Content -->
             <div class="tab-pane fade show active" id="daily">
                 <div class="input-group date">
@@ -113,6 +119,24 @@
                     <div class="input-group-append">
                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                     </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade show active" id="leaderboardtab">
+                <!-- <button id="showLeaderBoard" style="display: none">showLeaderBoard</button> -->
+                <div id="leaderboardContainer" style="display: none" >
+                    
+                    <h1>User Leaderboard</h1>
+                    <table id="leaderboard" class="table table-sm table-borderless mt-2">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>Total Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -209,10 +233,7 @@
         integrity="sha384-dNs4fHqOhAExN87HVG9smNjk/xJ0HbJlEy1XaBh1lCKW7Fd+6aD/wzXt34RiYIeU"
         crossorigin="anonymous"></script>
 
-    <!-- Initialize Datepickers -->
-    <script>
-
-    </script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js "></script>
 
     <script src="../js/expense.js"></script>
     <script src="../js/income.js"></script>

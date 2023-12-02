@@ -2,6 +2,8 @@
 const token = localStorage.getItem("token");
 var selectedCurrency = getCurrency() || "";
 
+
+
 updateIncomeBalance();
 updateExpenseBalance();
 updateClosingBalance();
@@ -103,11 +105,13 @@ const parseJwt = (token) => {
   return JSON.parse(jsonPayload);
 };
 
+
+
 window.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
   const decodedToken = parseJwt(token);
   if (decodedToken.isPremiumUser) {
-    document.getElementById("rzp-button1").style.display = "none";
+    document.getElementById("rzp-button1").style.display = "block";
     document.getElementById("message").innerHTML = "You are a premium user now";
     displayLeaderboard();
   }
@@ -185,20 +189,26 @@ async function fetchLeaderboardData() {
 
 // Display leaderboard function
 async function displayLeaderboard() {
-  const leaderboardButton = document.getElementById("showLeaderBoard");
-  leaderboardButton.style.display = "block";
+  const leaderboardButton = document.getElementById("leaderboard-tab");
+  // leaderboardButton.style.display = "block";
 
   leaderboardButton.addEventListener("click", async () => {
     document.getElementById("leaderboardContainer").style.display = "block";
     const leaderboardBody = document.getElementById("leaderboardBody");
-    leaderboardBody.innerHTML = ""; // Clear previous content
+    // Clear previous content
 
     try {
+      leaderboardBody.innerHTML = ""; 
       const userLeaderboardDetails = await fetchLeaderboardData();
-
+      console.log(userLeaderboardDetails);
+      
       userLeaderboardDetails.forEach((user, index) => {
         const row = document.createElement("tr");
-
+        // row.innerHTML=`<tr>
+        //                   <th>${index + 1}</th>
+        //                   <th>${user.name}</th>
+        //                   <th>${user.totalExpense}</th>
+        //               </tr>`;
         const rankCell = document.createElement("td");
         rankCell.textContent = index + 1;
 
@@ -206,7 +216,7 @@ async function displayLeaderboard() {
         nameCell.textContent = user.name;
 
         const costCell = document.createElement("td");
-        costCell.textContent = user.totalincome;
+        costCell.textContent = user.totalExpense;
 
         row.appendChild(rankCell);
         row.appendChild(nameCell);
@@ -214,14 +224,15 @@ async function displayLeaderboard() {
 
         leaderboardBody.appendChild(row);
       });
-      leaderboardButton.style.display = "none";
+      
+      // leaderboardButton.style.display = "none";
     } catch (error) {
       console.error("Error displaying leaderboard:", error);
     }
   });
 
   // Add the button to the DOM
-  document.body.appendChild(leaderboardButton);
+  // document.body.appendChild(leaderboardButton);
 }
 
 

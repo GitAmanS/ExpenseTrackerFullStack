@@ -1,5 +1,5 @@
 const userModel = require("../models/userModel");
-const expenseModel = require("../models/incomeModel");
+const incomeModel = require("../models/incomeModel");
 const sequelize = require("sequelize");
 const getUserLeaderBoard = async (req, res) => {
   try {
