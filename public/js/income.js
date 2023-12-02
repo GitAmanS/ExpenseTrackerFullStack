@@ -156,6 +156,7 @@ async function buyPremium(e) {
       //   "Welcome to our Premium Membership, You have now access to Reports and LeaderBoard"
       // );
       document.getElementById("rzp-button1").style.display = "none";
+      document.getElementById("primium-feature").style.display = "block";
       document.getElementById("message").innerHTML =
         "You are a premium user now";
       localStorage.setItem("token", res.data.token);
@@ -193,6 +194,7 @@ async function displayLeaderboard() {
   // leaderboardButton.style.display = "block";
 
   leaderboardButton.addEventListener("click", async () => {
+    console.log("Button clicked!");
     document.getElementById("leaderboardContainer").style.display = "block";
     const leaderboardBody = document.getElementById("leaderboardBody");
     // Clear previous content
@@ -466,7 +468,7 @@ window.addEventListener("DOMContentLoaded", () => {
   if (decodedToken.isPremiumUser) {
     document.getElementById("rzp-button1").style.display = "none";
     document.getElementById("message").innerHTML = "You are a premium user now";
-    displayLeaderboard();
+    document.getElementById("primium-feature").style.display = "block";
   }
   axios
     .get("http://localhost:3000/expense/getAllExpenses", {
