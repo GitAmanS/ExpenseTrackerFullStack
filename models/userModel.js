@@ -29,6 +29,10 @@ const UserModel = sequelize.define("Users", {
     type: Sequelize.INTEGER,
     defaultValue: 0,
   },
+  totalIncome: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+  },
 });
 
 module.exports = UserModel;
