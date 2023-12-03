@@ -303,14 +303,14 @@ function updateIncomeBalance() {
     .then((res) => {
       console.log("fetched:" + res.data);
       var data = res.data || "0.00";
-      sumOfIncome = data;
+      sumOfIncome = data.totalIncome;
       var totalIncome = document.getElementById("totalIncome");
 
       let content = "";
 
       content += `<tr>
         <th class="p-2">Total Income (Credit)</th>
-        <th class="p-2 text-right">${selectedCurrency}${data}</th>
+        <th class="p-2 text-right">${selectedCurrency}${sumOfIncome}</th>
       </tr>`;
 
       // Replace the content instead of appending
@@ -330,14 +330,15 @@ function updateExpenseBalance() {
     .then((res) => {
       console.log("fetched:" + res.data);
       var data = res.data || "0.00";
-      sumOfExpenses = data;
+      console.log(data);
+      sumOfExpenses = data.totalExpense;
       var totalExpense = document.getElementById("totalExpense");
 
       let content = "";
 
       content += `<tr>
         <th class="p-2">Total Expense (Debit)</th>
-        <th class="p-2 text-right">${selectedCurrency}${data}</th>
+        <th class="p-2 text-right">${selectedCurrency}${sumOfExpenses}</th>
       </tr>`;
 
       // Replace the content instead of appending

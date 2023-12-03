@@ -128,16 +128,23 @@ const getAllExpenses = async (req, res, next) => {
   }
 };
 
-const getTotalExpenses = async(req, res, next)=>{
+const getTotalExpenses = async (req, res, next) => {
   try {
-    const sumOfExpenses = await ExpenseModel.sum('ExpenseAmount', {
-      where: { userId: req.user.id },
-    });
-    res.status(200).json(sumOfExpenses);
+    // Find the user by primary key (id)
+    const user = await UserModel.findByPk(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Access the totalExpense directly from the UserModel
+    const totalExpense = user.totalExpense;
+
+    res.status(200).json({ totalExpense });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({
-      err: err,
+      error: 'Internal Server Error',
     });
   }
 };

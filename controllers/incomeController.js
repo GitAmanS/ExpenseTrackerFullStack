@@ -25,11 +25,11 @@ const addIncome = async (req, res, next) => {
     );
 
     const newTotalincome =
-      parseInt(req.user.totalincome) + parseInt(IncomeAmount);
+      parseInt(req.user.totalIncome) + parseInt(IncomeAmount);
 
     await UserModel.update(
       {
-        totalincome: newTotalincome,
+        totalIncome: newTotalincome,
       },
       {
         where: { id: req.user.id },
@@ -128,18 +128,27 @@ const getAllIncomes = async (req, res, next) => {
   }
 };
 
-const getTotalIncomes = async(req, res, next)=>{
+const getTotalIncomes = async (req, res, next) => {
   try {
-    const sumOfIncomes = await IncomeModel.sum('IncomeAmount', {
-      where: { userId: req.user.id },
-    });
-    res.status(200).json(sumOfIncomes);
+    // Find the user by primary key (id)
+    const user = await UserModel.findByPk(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Access the totalExpense directly from the UserModel
+    const totalIncome = user.totalIncome;
+
+    res.status(200).json({ totalIncome });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({
-      err: err,
+      error: 'Internal Server Error',
     });
   }
 };
+
+
 
 module.exports = { addIncome, deleteIncome, getAllIncomes, getTotalIncomes };
