@@ -49,7 +49,9 @@
             <li id="primium-feature" class="nav-item" style="display: none;">
                 <a class="nav-link" id="leaderboard-tab" data-toggle="tab"href="#leaderboardtab">Leaderboard</a>
             </li>
-
+            <!-- <li id="report-genereation" class="nav-item">
+                <a class="nav-link" id="report-tab" data-toggle="tab"href="#reporttab">Report</a>
+            </li> -->
         </ul>
         
         <!-- Tab Content -->
@@ -119,10 +121,60 @@
                     <div class="input-group-append">
                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                     </div>
+                    <div class="container mt-4" id="reportContainer">
+                        <div id="reportTitle" class="text-right font-italic">Date: 2023-12-31</div>
+                    
+                        <h2 id="dateCorner" class="text-center mb-4">Expense Report</h2>
+                    
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Income</th>
+                                    <th>Expense</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Sample Data -->
+                                <tr>
+                                    <td>2023-01-01</td>
+                                    <td>Groceries</td>
+                                    <td>Food</td>
+                                    <td>100.00</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2023-01-02</td>
+                                    <td>Gas</td>
+                                    <td>Transportation</td>
+                                    <td></td>
+                                    <td>40.00</td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3">Total</td>
+                                    <td>100.00</td>
+                                    <td>40.00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">Total Profit/Loss</td>
+                                    <td>60.00</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    
+                        
+                    </div>
+                    <button id="pdfDownloadbtn" class="btn btn-primary" onclick="downloadPDF()" style="display: none;">Download as PDF</button>
+                </div>
                 </div>
             </div>
 
-            <div class="tab-pane fade show active" id="leaderboardtab">
+            <div class="tab-pane fade " id="leaderboardtab">
                 <!-- <button id="showLeaderBoard" style="display: none">showLeaderBoard</button> -->
                 <div id="leaderboardContainer" style="display: none" >
                     
@@ -139,6 +191,59 @@
                     </table>
                 </div>
             </div>
+
+            <!-- <div class="tab-pane fade" id="reporttab">
+                <button id="showLeaderBoard" style="display: none">showLeaderBoard</button>
+                <div class="container mt-4" id="reportContainer">
+                    <div id="reportTitle" class="text-right font-italic">Date: 2023-12-31</div>
+                
+                    <h2 id="dateCorner" class="text-center mb-4">Expense Report</h2>
+                
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Income</th>
+                                <th>Expense</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+          
+                            <tr>
+                                <td>2023-01-01</td>
+                                <td>Groceries</td>
+                                <td>Food</td>
+                                <td>100.00</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>2023-01-02</td>
+                                <td>Gas</td>
+                                <td>Transportation</td>
+                                <td></td>
+                                <td>40.00</td>
+                            </tr>
+                           
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">Total</td>
+                                <td>100.00</td>
+                                <td>40.00</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">Total Profit/Loss</td>
+                                <td>60.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                
+                    
+                </div>
+                <button class="btn btn-primary" onclick="downloadPDF()">Download as PDF</button>
+            </div> -->
         </div>
     </div>
 
@@ -234,7 +339,7 @@
         crossorigin="anonymous"></script>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js "></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
     <script src="../js/expense.js"></script>
     <script src="../js/income.js"></script>
     

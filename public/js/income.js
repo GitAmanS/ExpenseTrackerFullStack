@@ -112,6 +112,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const decodedToken = parseJwt(token);
   if (decodedToken.isPremiumUser) {
     document.getElementById("rzp-button1").style.display = "block";
+    document.getElementById("pdfDownloadbtn").style.display = "block";
     document.getElementById("message").innerHTML = "You are a premium user now";
     displayLeaderboard();
   }
@@ -157,6 +158,7 @@ async function buyPremium(e) {
       // );
       document.getElementById("rzp-button1").style.display = "none";
       document.getElementById("primium-feature").style.display = "block";
+      document.getElementById("pdfDownloadbtn").style.display = "block";
       document.getElementById("message").innerHTML =
         "You are a premium user now";
       localStorage.setItem("token", res.data.token);
@@ -470,6 +472,7 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("rzp-button1").style.display = "none";
     document.getElementById("message").innerHTML = "You are a premium user now";
     document.getElementById("primium-feature").style.display = "block";
+    document.getElementById("pdfDownloadbtn").style.display = "block";
   }
   axios
     .get("http://localhost:3000/expense/getAllExpenses", {
@@ -486,3 +489,19 @@ window.addEventListener("DOMContentLoaded", () => {
       console.log("Error fetching data:", err);
     });
 });
+
+
+function downloadPDF() {
+  // const reportTitle = document.getElementById('reportTitle').innerHTML;
+  // const dateCorner = document.getElementById('dateCorner').innerHTML;
+
+  // const element = document.createElement('div');
+  // element.innerHTML = `
+  //     <div>${dateCorner}</div>
+  //     <div>${reportTitle}</div>
+  //     <table>${document.getElementById('reportTable').innerHTML}</table>
+  // `;
+
+  const element = document.getElementById('reportContainer');
+  html2pdf(element);
+}
