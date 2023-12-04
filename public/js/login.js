@@ -48,3 +48,11 @@ async function loginForm(e) {
     }
   }
 }
+
+
+
+
+const forBtn = document.getElementById("forgotPassowrd");
+forBtn.addEventListener("click", ()=>{
+  window.location.href = "../views/forgotPassowrd.html";
+});
