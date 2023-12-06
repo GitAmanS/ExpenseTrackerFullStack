@@ -12,4 +12,6 @@ router.get("/getTotalExpenses", ExpenseController.getTotalExpenses);
 
 router.get("/download", ExpenseController.expenseDownload);
 
+router.get("/getAllLinks", ExpenseController.getAllLinks);
+
 module.exports = router;

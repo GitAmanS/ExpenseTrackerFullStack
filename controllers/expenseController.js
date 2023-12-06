@@ -2,6 +2,7 @@ const ExpenseModel = require("../models/expenseModel");
 const UserModel = require("../models/userModel");
 const sequelize = require("../util/database");
 const AWS  = require("aws-sdk");
+const downloadModel = require("../models/downloadLinkModel");
 
 function uploadToAWS(data, filename) {
   const BUCKET_NAME = "expensetrackingappnew23";
@@ -44,10 +45,34 @@ const expenseDownload = async (req, res) => {
     const filename = `Expense${userId}${new Date()}.txt`;
     const fileURL = await uploadToAWS(stringifiedExpenses, filename);
     console.log("fileurl", fileURL);
-    res.status(200).json({ fileURL, success: true });
+    const data = await downloadModel.create({
+      UserId:userId,
+      url:fileURL,
+    });
+    res.status(200).json({ fileURL, data, success: true });
+
   } catch (error) {
     console.error("Error in expenseDownload:", error);
     res.status(500).json({ success: false, error: "Internal Server Error" });
+  }
+};
+
+const getAllLinks = async(req, res) =>{
+  try{
+    userId = req.user.id;
+
+    const expenseLinks  = await downloadModel.findAll({
+      where: { userId: userId },
+    });
+
+    if(!expenseLinks){
+      res.status(500).json({data:"No links are available for this user"});
+    }else{
+      res.status(200).json({expenseLinks});
+    }
+  }
+  catch(error){
+    res.status(500).json({success:false, error});
   }
 };
 
@@ -163,20 +188,30 @@ const deleteExpense = async (req, res, next) => {
   }
 };
 
-//fetch all Expenses
 const getAllExpenses = async (req, res, next) => {
   try {
+    // Extracting pagination parameters from query
+    const page = parseInt(req.query.page) || 1; // Default to page 1
+    const perPage = parseInt(req.query.perPage) || 10; // Default to 10 items per page
+
+    // Calculate offset based on page and perPage
+    const offset = (page - 1) * perPage;
+
     const Expenses = await ExpenseModel.findAll({
       where: { userId: req.user.id },
+      limit: perPage,
+      offset: offset,
     });
+
     res.status(200).json(Expenses);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({
-      err: err, userId: req.user.id,
+      error: 'Internal Server Error',
     });
   }
 };
+
 
 const getTotalExpenses = async (req, res, next) => {
   try {
@@ -201,4 +236,4 @@ const getTotalExpenses = async (req, res, next) => {
 
 
 
-module.exports = { addExpense, deleteExpense, getAllExpenses, getTotalExpenses, expenseDownload };
+module.exports = { addExpense, deleteExpense, getAllExpenses, getTotalExpenses, expenseDownload, getAllLinks };

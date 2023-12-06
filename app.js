@@ -12,6 +12,7 @@ const Income = require("./models/incomeModel");
 const User = require("./models/userModel");
 const Order = require("./models/ordersModel");
 const forgotPasswordModel = require("./models/ForgotPasswordModel");
+const downloadLinks = require("./models/downloadLinkModel");
 
 const userauthentication = require("./middleware/authentication");
 const purchaseMembershipRouter = require("./routes/purchaseMembershipRouter");
@@ -46,6 +47,9 @@ Expense.belongsTo(User);
 
 User.hasMany(forgotPasswordModel);
 forgotPasswordModel.belongsTo(User);
+
+User.hasMany(downloadLinks);
+downloadLinks.belongsTo(User);
 
 sequelize
   .sync()

@@ -117,6 +117,7 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("pdfDownloadbtn").style.display = "block";
     document.getElementById("message").innerHTML = "You are a premium user now";
     displayLeaderboard();
+    getAllExpenseLinks()
   }
   axios
     .get("http://localhost:3000/income/getAllIncomes", {
@@ -192,54 +193,7 @@ async function fetchLeaderboardData() {
   }
 }
 
-// Display leaderboard function
-async function displayLeaderboard() {
-  const leaderboardButton = document.getElementById("leaderboard-tab");
-  // leaderboardButton.style.display = "block";
 
-  leaderboardButton.addEventListener("click", async () => {
-    console.log("Button clicked!");
-    document.getElementById("leaderboardContainer").style.display = "block";
-    const leaderboardBody = document.getElementById("leaderboardBody");
-    // Clear previous content
-
-    try {
-      leaderboardBody.innerHTML = ""; 
-      const userLeaderboardDetails = await fetchLeaderboardData();
-      console.log(userLeaderboardDetails);
-      
-      userLeaderboardDetails.forEach((user, index) => {
-        const row = document.createElement("tr");
-        // row.innerHTML=`<tr>
-        //                   <th>${index + 1}</th>
-        //                   <th>${user.name}</th>
-        //                   <th>${user.totalExpense}</th>
-        //               </tr>`;
-        const rankCell = document.createElement("td");
-        rankCell.textContent = index + 1;
-
-        const nameCell = document.createElement("td");
-        nameCell.textContent = user.name;
-
-        const costCell = document.createElement("td");
-        costCell.textContent = user.totalExpense;
-
-        row.appendChild(rankCell);
-        row.appendChild(nameCell);
-        row.appendChild(costCell);
-
-        leaderboardBody.appendChild(row);
-      });
-      
-      // leaderboardButton.style.display = "none";
-    } catch (error) {
-      console.error("Error displaying leaderboard:", error);
-    }
-  });
-
-  // Add the button to the DOM
-  // document.body.appendChild(leaderboardButton);
-}
 
 
 //PAGE FUNCTIONALITY
@@ -470,56 +424,76 @@ async function addNewExpense(e) {
 window.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
   const decodedToken = parseJwt(token);
-  if (decodedToken.isPremiumUser) {
-    document.getElementById("rzp-button1").style.display = "none";
-    document.getElementById("message").innerHTML = "You are a premium user now";
-    document.getElementById("primium-feature").style.display = "block";
-    document.getElementById("pdfDownloadbtn").style.display = "block";
-  }
-  axios
-    .get("http://localhost:3000/expense/getAllExpenses", {
-      headers: { Authorization: token },
-    })
-    .then((res) => {
-      console.log("fetched:" + res.data);
-      var data = res.data;
-      data.forEach((item) => {
-        addRowsToExpenseTable(item);
+
+  // Set up pagination variables
+  let currentPage = 1;
+  let hasMorePages = true; // Flag to track if there are more pages
+
+  // Function to fetch expenses based on page
+  const fetchExpenses = async (page) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/expense/getAllExpenses?page=${page}`, {
+        headers: { Authorization: token },
       });
-    })
-    .catch((err) => {
+
+      return response.data;
+    } catch (err) {
       console.log("Error fetching data:", err);
+    }
+  };
+
+  // Function to update the expense table with new data
+  const updateExpenseTable = (data) => {
+    // Clear existing rows
+    document.getElementById("expenseTableBody").innerHTML = "";
+
+    // Add new rows
+    data.forEach((item) => {
+      addRowsToExpenseTable(item);
     });
+  };
+
+  // Function to disable/enable next button based on whether there are more pages
+  const updateNextButton = () => {
+    const nextButton = document.getElementById("nextPage");
+    nextButton.disabled = !hasMorePages;
+  };
+
+  // Initial fetch and update
+  fetchExpenses(currentPage).then((data) => {
+    console.log("fetched:", data);
+    updateExpenseTable(data);
+    hasMorePages = data.length > 0; // Set hasMorePages based on fetched data
+    updateNextButton();
+  });
+
+  // Pagination event listeners
+  document.getElementById("prevPage").addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      fetchExpenses(currentPage).then((data) => {
+        updateExpenseTable(data);
+        hasMorePages = true; // Reset hasMorePages when navigating to a previous page
+        updateNextButton();
+      });
+    }
+  });
+
+  document.getElementById("nextPage").addEventListener("click", () => {
+    if (hasMorePages) {
+      currentPage++;
+      fetchExpenses(currentPage).then((data) => {
+        updateExpenseTable(data);
+        hasMorePages = data.length > 1; // Update hasMorePages based on fetched data
+        updateNextButton();
+      });
+    }
+  });
 });
 
 
-async function downloadPDF() {
-  // const reportTitle = document.getElementById('reportTitle').innerHTML;
-  // const dateCorner = document.getElementById('dateCorner').innerHTML;
 
-  // const element = document.createElement('div');
-  // element.innerHTML = `
-  //     <div>${dateCorner}</div>
-  //     <div>${reportTitle}</div>
-  //     <table>${document.getElementById('reportTable').innerHTML}</table>
-  // `;
-  await axios.get("/expense/download", {
-    headers: { Authorization: token },
-  })
-    .then((response) => {
-      if (response.status === 200) {
-        var a = document.createElement("a");
-        a.href = response.data.fileURL;
-        a.download = "myexpense.csv";
-        a.click();
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  
 
-}
 
 document.addEventListener('DOMContentLoaded', function () {
   // Get all tabs and tab content
@@ -548,3 +522,111 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   });
 });
+async function downloadPDF() {
+
+  await axios.get("/expense/download", {
+    headers: { Authorization: token },
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        var a = document.createElement("a");
+        a.href = response.data.fileURL;
+        a.download = "myexpense.csv";
+        a.click();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  
+
+}
+async function getAllExpenseLinks() {
+  const linksButton = document.getElementById("links-tab");
+  linksButton.addEventListener("click", async () => {
+    console.log("Button clicked!");
+
+    try {
+      const response = await axios.get("/expense/getAllLinks", {
+        headers: { Authorization: token },
+      });
+
+      if (response.status === 200) {
+        const linksContainer = document.getElementById("linksContainer");
+        linksContainer.innerHTML = ""; // Clear previous content
+
+        const expenseLinks = response.data.expenseLinks;
+
+        if (expenseLinks.length > 0) {
+          const ul = document.createElement("ul");
+
+          expenseLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+
+            a.href = link.url;
+            a.textContent = `Link ${link.id}`; // You can customize the label
+
+            li.appendChild(a);
+            ul.appendChild(li);
+          });
+
+          linksContainer.appendChild(ul);
+        } else {
+          linksContainer.textContent = "No expense links available.";
+        }
+      }
+    } catch (error) {
+      console.error("Error getting expense links:", error);
+    }
+  });
+}
+
+// Display leaderboard function
+async function displayLeaderboard() {
+  const leaderboardButton = document.getElementById("leaderboard-tab");
+  // leaderboardButton.style.display = "block";
+
+  leaderboardButton.addEventListener("click", async () => {
+    console.log("Button clicked!");
+    document.getElementById("leaderboardContainer").style.display = "block";
+    const leaderboardBody = document.getElementById("leaderboardBody");
+    // Clear previous content
+
+    try {
+      leaderboardBody.innerHTML = ""; 
+      const userLeaderboardDetails = await fetchLeaderboardData();
+      console.log(userLeaderboardDetails);
+      
+      userLeaderboardDetails.forEach((user, index) => {
+        const row = document.createElement("tr");
+        // row.innerHTML=`<tr>
+        //                   <th>${index + 1}</th>
+        //                   <th>${user.name}</th>
+        //                   <th>${user.totalExpense}</th>
+        //               </tr>`;
+        const rankCell = document.createElement("td");
+        rankCell.textContent = index + 1;
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = user.name;
+
+        const costCell = document.createElement("td");
+        costCell.textContent = user.totalExpense;
+
+        row.appendChild(rankCell);
+        row.appendChild(nameCell);
+        row.appendChild(costCell);
+
+        leaderboardBody.appendChild(row);
+      });
+      
+      // leaderboardButton.style.display = "none";
+    } catch (error) {
+      console.error("Error displaying leaderboard:", error);
+    }
+  });
+
+  // Add the button to the DOM
+  // document.body.appendChild(leaderboardButton);
+}
