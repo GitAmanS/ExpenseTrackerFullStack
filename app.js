@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const path = require("path");
+const https = require("https");
 
 const userRouter = require("./routes/userRouter");
 const sequelize = require("./util/database");
@@ -63,13 +64,19 @@ forgotPasswordModel.belongsTo(User);
 User.hasMany(downloadLinks);
 downloadLinks.belongsTo(User);
 
+const privateKey = fs.readFileSync('server.key');
+const certificate = fs.readFileSync('server.cer');
+
 sequelize
   .sync()
   .then(() => {
-    app.listen(process.env.PORT||3000, () => {
-      console.log("http://localhost:3000");
-    });
+    // https
+    //   .createServer({key:privateKey, cert: certificate}, app)
+    //   .listen(process.env.PORT||3000);
+    app.listen(process.env.PORT||3000);
   })
   .catch((err) => {
     console.error(err);
   });
+
+

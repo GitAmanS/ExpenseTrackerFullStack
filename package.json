@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon app.js",
-    "start": "TOKEN_SECRET=v%#JK2$5dfP!9sL@3gH*ZaE RAZORPAY_KEY_ID=rzp_test_YbsfA5JjTyJgzA RAZORPAY_KEY_SECRET=nU8XFTJTJzGHQOrdhWgwn75w API_KEY=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 BUCKET_NAME=expensetrackingappnew23 IAM_USER_KEY=AKIASADE64OLY7E5KSBO IAM_USER_SECRET=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 nodemon app.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",

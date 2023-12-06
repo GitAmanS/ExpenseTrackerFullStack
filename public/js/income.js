@@ -458,10 +458,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Function to update the expense table with new data
   const updateExpenseTable = (data) => {
-    document.getElementById("expenseTableBody").innerHTML = "";
+    if(data){document.getElementById("expenseTableBody").innerHTML = "";
     data.forEach((item) => {
       addRowsToExpenseTable(item);
-    });
+    });}
   };
 
   // Function to disable/enable next button based on whether there are more pages

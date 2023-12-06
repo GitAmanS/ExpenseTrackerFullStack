@@ -1,2 +1,5 @@
 ::1 - - [06/Dec/2023:12:48:23 +0000] "GET /js/expense.js HTTP/1.1" 404 152 "http://localhost:3000/views/expensePage.html" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
 ::1 - - [06/Dec/2023:12:51:02 +0000] "GET /js/expense.js HTTP/1.1" 404 152 "http://localhost:3000/views/expensePage.html" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+::1 - - [06/Dec/2023:13:57:01 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "https://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+::1 - - [06/Dec/2023:13:57:11 +0000] "GET /js/expense.js HTTP/1.1" 404 152 "https://localhost:3000/views/expensePage.html" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+::1 - - [06/Dec/2023:13:57:25 +0000] "GET /js/expense.js HTTP/1.1" 404 152 "https://localhost:3000/views/expensePage.html" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
