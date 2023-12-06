@@ -22,6 +22,14 @@
             padding: 0.25rem 0.5rem;
             font-size: small;
         } 
+        .custom-btn-group-sm {
+            height: 24px; /* Adjust the height as needed */
+        }
+
+        .custom-btn-sm {
+            padding: 0.25rem 0.5rem; /* Adjust padding to decrease button height */
+            font-size: 0.75rem; /* Adjust font size to decrease button height */
+        }
     </style>
 
 </head>
@@ -82,7 +90,7 @@
                     </button>
 
                     <!-- Balance Table -->
-                    <table id="incomeTable" class="table table-sm table-borderless mt-2">
+                    <!-- <table id="incomeTable" class="table table-sm table-borderless mt-2">
                         <thead id="totalBalance">
                             
                         </thead>
@@ -93,7 +101,7 @@
                         <tbody id="incomeTableBody">
 
                         </tbody>
-                    </table>
+                    </table> -->
                     <table id="expenseTable" class="table table-sm table-borderless mt-1">
                         <thead id="totalExpense" class="thead-light">
             
@@ -102,25 +110,23 @@
                         
                         </tbody>
                     </table>
-                    <!-- Add a dropdown for selecting items per page -->
-                    <div>
-                        <label for="itemsPerPage">Items per page:</label>
-                        <select id="itemsPerPage" onchange="handleItemsPerPageChange()">
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
+                    <div class="form-group mb-2">
+                        <label for="itemsPerPage" class="mr-2">Items per page:</label>
+                        <select id="itemsPerPage" class="custom-select" onchange="handleItemsPerPageChange()">
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="20">20</option>
+                          <option value="50">50</option>
                         </select>
-                    </div>
-                    <!-- Add navigation elements for pagination -->
-                    <div>
-                        <button id="prevPage">Previous</button>
-                        <button id="nextPage">Next</button>
-                    </div>
-                    <div id="paginationContainer" class="mt-3">
-                        <!-- Pagination buttons will be added here dynamically -->
-        
-                    </div>
+                      </div>
+                      
+                      <!-- Add navigation elements for pagination -->
+                      <div class="btn-group custom-btn-group-sm ml-2" role="group">
+                        <button id="prevPage" type="button" class="btn btn-secondary custom-btn-sm">Previous</button>
+                        <button id="nextPage" type="button" class="btn btn-primary custom-btn-sm">Next</button>
+                      </div>
+                      
+                      
                       
                 </div>
             </div>

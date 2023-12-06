@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start:dev": "nodemon app.js",
+    "start": "TOKEN_SECRET=v%#JK2$5dfP!9sL@3gH*ZaE RAZORPAY_KEY_ID=rzp_test_YbsfA5JjTyJgzA RAZORPAY_KEY_SECRET=nU8XFTJTJzGHQOrdhWgwn75w API_KEY=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 BUCKET_NAME=expensetrackingappnew23 IAM_USER_KEY=AKIASADE64OLY7E5KSBO IAM_USER_SECRET=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 nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -24,10 +25,13 @@
     "aws-sdk": "^2.1511.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
     "mysql2": "^3.6.3",
     "nodemon": "^3.0.1",
     "razorpay": "^2.9.2",

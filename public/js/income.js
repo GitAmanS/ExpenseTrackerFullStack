@@ -6,91 +6,91 @@ var selectedCurrency = getCurrency() || "";
 
 
 
-updateIncomeBalance();
+// updateIncomeBalance();
 updateExpenseBalance();
-updateClosingBalance();
+// updateClosingBalance();
 
-function addRowsToTable(income) {
-  var tbody = document.getElementById("incomeTableBody");
-  var tableContent = "";
+// function addRowsToTable(income) {
+//   var tbody = document.getElementById("incomeTableBody");
+//   var tableContent = "";
 
-  tableContent += `<div><tr onclick="showHideRow('hidden_row${income.id}')">
-    <td  class="p-2">${income.IncomeCategory}</td>
-    <td class="p-2 text-right">${selectedCurrency} ${income.IncomeAmount}</td>
-  </tr>
-  <tr id="hidden_row${income.id}" class="py-1 hidden_row"> 
-    <td>
-    ${income.IncomeDescription}
-    </td>
-    <td colspan=4 class="ml-auto"> 
+//   tableContent += `<div><tr onclick="showHideRow('hidden_row${income.id}')">
+//     <td  class="p-2">${income.IncomeCategory}</td>
+//     <td class="p-2 text-right">${selectedCurrency} ${income.IncomeAmount}</td>
+//   </tr>
+//   <tr id="hidden_row${income.id}" class="py-1 hidden_row"> 
+//     <td>
+//     ${income.IncomeDescription}
+//     </td>
+//     <td colspan=4 class="ml-auto"> 
       
-      <button class="btn-delete" onclick="deleteRow(this,${income.id})">Delete</button>
-      <button class="btn-update " onclick="updateRow(this)">Update</button>
-    </td> 
-  </tr></div> `;
+//       <button class="btn-delete" onclick="deleteRow(this,${income.id})">Delete</button>
+//       <button class="btn-update " onclick="updateRow(this)">Update</button>
+//     </td> 
+//   </tr></div> `;
 
-  tbody.innerHTML += tableContent;
-}
+//   tbody.innerHTML += tableContent;
+// }
 
-// Functions for delete and update
-async function deleteRow(btn, incomeId) {
-  try {
-    const response = await axios.delete(
-      `http://localhost:3000/income/deleteIncome/${incomeId}`,
-      { headers: { Authorization: token } }
-    );
-    updateIncomeBalance();
-    console.log("income deleted:", response.data);
-    // Handle success if needed
-  } catch (error) {
-    console.error("Error deleting income:", error);
-    // Handle error if needed
-  }
-  console.log(incomeId);
-  // Find the visible row and remove it
-  var visibleRow = btn.parentNode.parentNode.previousElementSibling;
-  visibleRow.parentNode.removeChild(visibleRow);
+// // Functions for delete and update
+// async function deleteRow(btn, incomeId) {
+//   try {
+//     const response = await axios.delete(
+//       `http://localhost:3000/income/deleteIncome/${incomeId}`,
+//       { headers: { Authorization: token } }
+//     );
+//     updateIncomeBalance();
+//     console.log("income deleted:", response.data);
+//     // Handle success if needed
+//   } catch (error) {
+//     console.error("Error deleting income:", error);
+//     // Handle error if needed
+//   }
+//   console.log(incomeId);
+//   // Find the visible row and remove it
+//   var visibleRow = btn.parentNode.parentNode.previousElementSibling;
+//   visibleRow.parentNode.removeChild(visibleRow);
 
-  // Find the hidden row and remove it
-  var hiddenRow = btn.parentNode.parentNode;
-  hiddenRow.parentNode.removeChild(hiddenRow);
-}
+//   // Find the hidden row and remove it
+//   var hiddenRow = btn.parentNode.parentNode;
+//   hiddenRow.parentNode.removeChild(hiddenRow);
+// }
 
-function updateRow(btn) {
-  // Implement update logic here
-  // For example, you can access the row and modify its content
-  var row = btn.parentNode.parentNode;
-  // Perform update operations
-}
+// function updateRow(btn) {
+//   // Implement update logic here
+//   // For example, you can access the row and modify its content
+//   var row = btn.parentNode.parentNode;
+//   // Perform update operations
+// }
 
-async function addNewIncome(e) {
-  e.preventDefault();
-  var selectedDate = $('#dailyDatepicker').val();
+// async function addNewIncome(e) {
+//   e.preventDefault();
+//   var selectedDate = $('#dailyDatepicker').val();
 
-  let incomeAmount = e.target.incomeAmount.value;
-  let incomeDescription = e.target.incomeDescription.value;
-  let incomeCategory = e.target.incomeName.value;
-  let income = {
-    incomeAmount: incomeAmount,
-    incomeDescription: incomeDescription,
-    incomeCategory: incomeCategory,
-    incomeDate:selectedDate,
-  };
+//   let incomeAmount = e.target.incomeAmount.value;
+//   let incomeDescription = e.target.incomeDescription.value;
+//   let incomeCategory = e.target.incomeName.value;
+//   let income = {
+//     incomeAmount: incomeAmount,
+//     incomeDescription: incomeDescription,
+//     incomeCategory: incomeCategory,
+//     incomeDate:selectedDate,
+//   };
 
-  try {
-    const response = await axios.post(
-      "http://localhost:3000/income/addIncome",
-      income,
-      { headers: { Authorization: token } }
-    );
-    console.log(response.data.income);
-    // Assuming the server sends back the newly created income
-    addRowsToTable(response.data.income);
-  } catch (error) {
-    console.error(error);
-  }
-  updateIncomeBalance();
-}
+//   try {
+//     const response = await axios.post(
+//       "http://localhost:3000/income/addIncome",
+//       income,
+//       { headers: { Authorization: token } }
+//     );
+//     console.log(response.data.income);
+//     // Assuming the server sends back the newly created income
+//     addRowsToTable(response.data.income);
+//   } catch (error) {
+//     console.error(error);
+//   }
+//   updateIncomeBalance();
+// }
 const parseJwt = (token) => {
   var base64Url = token.split(".")[1];
   var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -119,20 +119,20 @@ window.addEventListener("DOMContentLoaded", () => {
     displayLeaderboard();
     getAllExpenseLinks()
   }
-  axios
-    .get("http://localhost:3000/income/getAllIncomes", {
-      headers: { Authorization: token },
-    })
-    .then((res) => {
-      console.log("fetched:" + res.data);
-      var data = res.data;
-      data.forEach((item) => {
-        addRowsToTable(item);
-      });
-    })
-    .catch((err) => {
-      console.log("Error fetching data:", err);
-    });
+  // axios
+  //   .get("http://localhost:3000/income/getAllIncomes", {
+  //     headers: { Authorization: token },
+  //   })
+  //   .then((res) => {
+  //     console.log("fetched:" + res.data);
+  //     var data = res.data;
+  //     data.forEach((item) => {
+  //       addRowsToTable(item);
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     console.log("Error fetching data:", err);
+  //   });
 });
 
 async function buyPremium(e) {
@@ -301,27 +301,27 @@ function updateExpenseBalance() {
 
       // Replace the content instead of appending
       totalExpense.innerHTML = content;
-      updateClosingBalance();
+      // updateClosingBalance();
     })
     .catch((err) => {
       console.log("Error fetching data:", err);
     });
 }
 
-function updateClosingBalance(){
-  var finalbalance = sumOfIncome-sumOfExpenses;
-  var totalExpense = document.getElementById("totalBalance");
+// function updateClosingBalance(){
+//   var finalbalance = sumOfIncome-sumOfExpenses;
+//   var totalExpense = document.getElementById("totalBalance");
 
-      let content = "";
+//       let content = "";
 
-      content += `<tr>
-      <th class="p-2">C/F</th>
-      <th class="p-2 text-right">${selectedCurrency}${finalbalance}</th>
-    </tr>`;
+//       content += `<tr>
+//       <th class="p-2">C/F</th>
+//       <th class="p-2 text-right">${selectedCurrency}${finalbalance}</th>
+//     </tr>`;
 
-      // Replace the content instead of appending
-      totalExpense.innerHTML = content;
-}
+//       // Replace the content instead of appending
+//       totalExpense.innerHTML = content;
+// }
 
 
 
@@ -342,20 +342,23 @@ function addRowsToExpenseTable(Expense) {
   var tbody2 = document.getElementById("expenseTableBody");
   var tableContent = "";
 
-  tableContent += `<div><tr onclick="showHideRow('hidden_rowE${Expense.id}')">
+  tableContent += `<tr onclick="showHideRow('hidden_rowE${Expense.id}')">
     <td  class="p-2">${Expense.ExpenseCategory}</td>
     <td class="p-2 text-right">${selectedCurrency} ${Expense.ExpenseAmount}</td>
   </tr>
-  <tr id="hidden_rowE${Expense.id}" class="py-1 hidden_row"> 
-    <td>
-    ${Expense.ExpenseDescription}
+
+  <tr id="hidden_rowE${Expense.id}" class="py-1 bg-light hidden_row"> 
+    <td class="d-flex justify-content-between align-items-center">
+      <span class="text-muted mr-1">
+        <h6>Description:${Expense.ExpenseDescription}</h6>
+      </span>
     </td>
-    <td colspan=4 class="ml-auto"> 
-      
-      <button class="btn-delete" onclick="deleteExpenseRow(this,${Expense.id})">Delete</button>
-      <button class="btn-update " onclick="updateRow(this)">Update</button>
+    <td class="d-flex justify-content-between align-items-center">
+      <button class="btn btn-danger" onclick="deleteExpenseRow(this,${Expense.id})">Delete</button>
     </td> 
-  </tr></div> `;
+    
+  </tr>
+ `;
 
   tbody2.innerHTML += tableContent;
 }

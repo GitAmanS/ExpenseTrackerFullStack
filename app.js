@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const fs = require("fs");
+const path = require("path");
 
 const userRouter = require("./routes/userRouter");
 const sequelize = require("./util/database");
@@ -18,11 +20,16 @@ const userauthentication = require("./middleware/authentication");
 const purchaseMembershipRouter = require("./routes/purchaseMembershipRouter");
 const premiumFeatureRouter = require("./routes/premiumFeatureRouter");
 
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
+
 const dotenv = require("dotenv");
 dotenv.config();
 
 const cors = require("cors");
 const app = express();
+
 app.use(express.static("public"));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,6 +41,11 @@ app.use("/expense", userauthentication.authenticate, expenseRotuer);
 app.use("/purchase", purchaseMembershipRouter);
 app.use("/premium", premiumFeatureRouter);
 app.use("/forgotPassword", forgotPassRouter);
+
+const accessLogStream= fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
+app.use(helmet());
+app.use(compression());
+app.use(morgan("combined", {stream:accessLogStream}));
 
 User.hasMany(Income);
 Income.belongsTo(User);
@@ -54,7 +66,7 @@ downloadLinks.belongsTo(User);
 sequelize
   .sync()
   .then(() => {
-    app.listen(3000, () => {
+    app.listen(process.env.PORT||3000, () => {
       console.log("http://localhost:3000");
     });
   })

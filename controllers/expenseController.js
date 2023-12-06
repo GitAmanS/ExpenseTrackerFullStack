@@ -5,9 +5,9 @@ const AWS  = require("aws-sdk");
 const downloadModel = require("../models/downloadLinkModel");
 
 function uploadToAWS(data, filename) {
-  const BUCKET_NAME = "expensetrackingappnew23";
-  const IAM_USER_KEY = "AKIASADE64OLY7E5KSBO";
-  const IAM_USER_SECRET = "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";
+  const BUCKET_NAME = process.env.BUCKET_NAME;
+  const IAM_USER_KEY = process.env.IAM_USER_KEY;
+  const IAM_USER_SECRET = process.env.IAM_USER_SECRET;
 
   const s3bucket = new AWS.S3({
     accessKeyId: IAM_USER_KEY,
