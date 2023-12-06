@@ -427,12 +427,23 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Set up pagination variables
   let currentPage = 1;
-  let hasMorePages = true; // Flag to track if there are more pages
+  let hasMorePages = true;
+  let perPage = getPerPageFromStorage() || 10; // Get from storage or default to 10
+
+  // Function to get perPage from user preferences (localStorage)
+  function getPerPageFromStorage() {
+    return parseInt(localStorage.getItem("perPage"), 10);
+  }
+
+  // Function to set perPage in user preferences (localStorage)
+  function setPerPageInStorage(value) {
+    localStorage.setItem("perPage", value.toString());
+  }
 
   // Function to fetch expenses based on page
-  const fetchExpenses = async (page) => {
+  const fetchExpenses = async (page, perPage) => {
     try {
-      const response = await axios.get(`http://localhost:3000/expense/getAllExpenses?page=${page}`, {
+      const response = await axios.get(`http://localhost:3000/expense/getAllExpenses?page=${page}&perPage=${perPage}`, {
         headers: { Authorization: token },
       });
 
@@ -444,10 +455,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Function to update the expense table with new data
   const updateExpenseTable = (data) => {
-    // Clear existing rows
     document.getElementById("expenseTableBody").innerHTML = "";
-
-    // Add new rows
     data.forEach((item) => {
       addRowsToExpenseTable(item);
     });
@@ -459,21 +467,35 @@ window.addEventListener("DOMContentLoaded", () => {
     nextButton.disabled = !hasMorePages;
   };
 
+  // Function to handle items per page change
+  window.handleItemsPerPageChange = () => {
+    perPage = parseInt(document.getElementById("itemsPerPage").value, 10);
+    setPerPageInStorage(perPage); // Store in user preferences
+    fetchExpenses(currentPage, perPage).then((data) => {
+      updateExpenseTable(data);
+      hasMorePages = data.length > 0;
+      updateNextButton();
+    });
+  };
+
   // Initial fetch and update
-  fetchExpenses(currentPage).then((data) => {
+  fetchExpenses(currentPage, perPage).then((data) => {
     console.log("fetched:", data);
     updateExpenseTable(data);
-    hasMorePages = data.length > 0; // Set hasMorePages based on fetched data
+    hasMorePages = data.length > 0;
     updateNextButton();
   });
+
+  // Set initial value for items per page
+  document.getElementById("itemsPerPage").value = perPage;
 
   // Pagination event listeners
   document.getElementById("prevPage").addEventListener("click", () => {
     if (currentPage > 1) {
       currentPage--;
-      fetchExpenses(currentPage).then((data) => {
+      fetchExpenses(currentPage, perPage).then((data) => {
         updateExpenseTable(data);
-        hasMorePages = true; // Reset hasMorePages when navigating to a previous page
+        hasMorePages = true;
         updateNextButton();
       });
     }
@@ -482,14 +504,16 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("nextPage").addEventListener("click", () => {
     if (hasMorePages) {
       currentPage++;
-      fetchExpenses(currentPage).then((data) => {
+      fetchExpenses(currentPage, perPage).then((data) => {
         updateExpenseTable(data);
-        hasMorePages = data.length > 1; // Update hasMorePages based on fetched data
+        hasMorePages = data.length > 0;
         updateNextButton();
       });
     }
   });
 });
+
+
 
 
 

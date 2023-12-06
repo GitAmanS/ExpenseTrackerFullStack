@@ -102,6 +102,16 @@
                         
                         </tbody>
                     </table>
+                    <!-- Add a dropdown for selecting items per page -->
+                    <div>
+                        <label for="itemsPerPage">Items per page:</label>
+                        <select id="itemsPerPage" onchange="handleItemsPerPageChange()">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        </select>
+                    </div>
                     <!-- Add navigation elements for pagination -->
                     <div>
                         <button id="prevPage">Previous</button>
