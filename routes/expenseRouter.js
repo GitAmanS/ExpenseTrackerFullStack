@@ -10,4 +10,6 @@ router.post("/addExpense", ExpenseController.addExpense);
 
 router.get("/getTotalExpenses", ExpenseController.getTotalExpenses);
 
+router.get("/download", ExpenseController.expenseDownload);
+
 module.exports = router;

@@ -1,3 +1,5 @@
+
+
 // Function to add rows to the table
 const token = localStorage.getItem("token");
 var selectedCurrency = getCurrency() || "";
@@ -491,7 +493,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function downloadPDF() {
+async function downloadPDF() {
   // const reportTitle = document.getElementById('reportTitle').innerHTML;
   // const dateCorner = document.getElementById('dateCorner').innerHTML;
 
@@ -501,7 +503,48 @@ function downloadPDF() {
   //     <div>${reportTitle}</div>
   //     <table>${document.getElementById('reportTable').innerHTML}</table>
   // `;
+  await axios.get("/expense/download", {
+    headers: { Authorization: token },
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        var a = document.createElement("a");
+        a.href = response.data.fileURL;
+        a.download = "myexpense.csv";
+        a.click();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  
 
-  const element = document.getElementById('reportContainer');
-  html2pdf(element);
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Get all tabs and tab content
+  var tabs = document.querySelectorAll('.nav-link');
+  var tabContents = document.querySelectorAll('.tab-pane');
+
+  // Function to hide all tab content
+  function hideAllTabs() {
+      tabContents.forEach(function (tab) {
+          tab.classList.remove('show', 'active');
+      });
+  }
+
+  // Function to show the selected tab content
+  function showTab(tabId) {
+      var selectedTab = document.querySelector(tabId);
+      selectedTab.classList.add('show', 'active');
+  }
+
+  // Event listener for tab clicks
+  tabs.forEach(function (tab) {
+      tab.addEventListener('click', function (event) {
+          event.preventDefault();
+          hideAllTabs();
+          showTab(this.getAttribute('href'));
+      });
+  });
+});

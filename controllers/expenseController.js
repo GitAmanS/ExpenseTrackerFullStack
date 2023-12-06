@@ -1,6 +1,56 @@
 const ExpenseModel = require("../models/expenseModel");
 const UserModel = require("../models/userModel");
 const sequelize = require("../util/database");
+const AWS  = require("aws-sdk");
+
+function uploadToAWS(data, filename) {
+  const BUCKET_NAME = "expensetrackingappnew23";
+  const IAM_USER_KEY = "AKIASADE64OLY7E5KSBO";
+  const IAM_USER_SECRET = "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";
+
+  const s3bucket = new AWS.S3({
+    accessKeyId: IAM_USER_KEY,
+    secretAccessKey: IAM_USER_SECRET,
+  });
+
+  return new Promise((resolve, reject) => {
+    s3bucket.createBucket(() => {
+      const params = {
+        Bucket: BUCKET_NAME,
+        Key: filename,
+        Body: data,
+        ACL: 'public-read',
+      };
+
+      s3bucket.upload(params, (err, s3response) => {
+        if (err) {
+          console.log("Something went wrong");
+          reject(err);
+        } else {
+          console.log("Success", s3response);
+          resolve(s3response.Location);
+        }
+      });
+    });
+  });
+}
+
+const expenseDownload = async (req, res) => {
+  try {
+    const expenses = await req.user.getExpenses();
+    const userId = req.user.id;
+    console.log(expenses);
+    const stringifiedExpenses = JSON.stringify(expenses);
+    const filename = `Expense${userId}${new Date()}.txt`;
+    const fileURL = await uploadToAWS(stringifiedExpenses, filename);
+    console.log("fileurl", fileURL);
+    res.status(200).json({ fileURL, success: true });
+  } catch (error) {
+    console.error("Error in expenseDownload:", error);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
+  }
+};
+
 //save data to database
 const addExpense = async (req, res, next) => {
   const t = await sequelize.transaction();
@@ -149,4 +199,6 @@ const getTotalExpenses = async (req, res, next) => {
   }
 };
 
-module.exports = { addExpense, deleteExpense, getAllExpenses, getTotalExpenses };
+
+
+module.exports = { addExpense, deleteExpense, getAllExpenses, getTotalExpenses, expenseDownload };

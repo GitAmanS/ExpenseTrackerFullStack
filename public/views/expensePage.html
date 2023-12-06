@@ -46,8 +46,10 @@
             <li class="nav-item">
                 <a class="nav-link" id="yearly-tab" data-toggle="tab" href="#yearly">Yearly</a>
             </li>
-            <li id="primium-feature" class="nav-item" style="display: none;">
-                <a class="nav-link" id="leaderboard-tab" data-toggle="tab"href="#leaderboardtab">Leaderboard</a>
+            <li id="primium-feature" class="nav-item" >
+                <a class="nav-link" id="leaderboard-tab" data-toggle="tab" href="#leaderboardtab">Leaderboard</a>
+
+
             </li>
             <!-- <li id="report-genereation" class="nav-item">
                 <a class="nav-link" id="report-tab" data-toggle="tab"href="#reporttab">Report</a>
@@ -174,9 +176,9 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade " id="leaderboardtab">
+            <div class="tab-pane fade " id="leaderboardtab" >
                 <!-- <button id="showLeaderBoard" style="display: none">showLeaderBoard</button> -->
-                <div id="leaderboardContainer" style="display: none" >
+                <div class="container mt-4" id="leaderboardContainer" style="display: none" >
                     
                     <h1>User Leaderboard</h1>
                     <table id="leaderboard" class="table table-sm table-borderless mt-2">
@@ -192,58 +194,8 @@
                 </div>
             </div>
 
-            <!-- <div class="tab-pane fade" id="reporttab">
-                <button id="showLeaderBoard" style="display: none">showLeaderBoard</button>
-                <div class="container mt-4" id="reportContainer">
-                    <div id="reportTitle" class="text-right font-italic">Date: 2023-12-31</div>
-                
-                    <h2 id="dateCorner" class="text-center mb-4">Expense Report</h2>
-                
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Description</th>
-                                <th>Category</th>
-                                <th>Income</th>
-                                <th>Expense</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-          
-                            <tr>
-                                <td>2023-01-01</td>
-                                <td>Groceries</td>
-                                <td>Food</td>
-                                <td>100.00</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>2023-01-02</td>
-                                <td>Gas</td>
-                                <td>Transportation</td>
-                                <td></td>
-                                <td>40.00</td>
-                            </tr>
-                           
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="3">Total</td>
-                                <td>100.00</td>
-                                <td>40.00</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">Total Profit/Loss</td>
-                                <td>60.00</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                
-                    
-                </div>
-                <button class="btn btn-primary" onclick="downloadPDF()">Download as PDF</button>
-            </div> -->
+
+            </div> 
         </div>
     </div>
 
@@ -332,6 +284,9 @@
 
     <!-- Bootstrap Datepicker JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 
     <!-- Font Awesome JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
