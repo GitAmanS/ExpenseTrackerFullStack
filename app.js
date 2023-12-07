@@ -25,11 +25,13 @@ const helmet = require("helmet");
 const compression = require("compression");
 const morgan = require("morgan");
 
-const dotenv = require("dotenv");
-dotenv.config();
+
 
 const cors = require("cors");
 const app = express();
+
+const dotenv = require("dotenv");
+dotenv.config();
 
 app.use(express.static("public"));
 app.use(cors());
