@@ -12,8 +12,8 @@ async function sendEmail (event) {
     const response = await axios.post('http://54.152.126.236:3000/forgotPassword/', {
         email: email, 
     });
-
     console.log(response);
+    alert("Email Sent Successfully");
     // .then(function (response) {
     //     // Handle the success response (optional)
     //     console.log('Password reset email sent successfully', response);

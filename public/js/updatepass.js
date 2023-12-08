@@ -21,6 +21,8 @@ async function submitResetPassword(event) {
             password: confirmPassword,
         });
 
+        alert("Password Updated Successfully");
+
         console.log(response.data);  // Use response.data to access the response body
 
         // Handle success, redirect, or display a message to the user
