@@ -21,9 +21,14 @@ async function submitResetPassword(event) {
             password: confirmPassword,
         });
 
-        alert("Password Updated Successfully");
-
-        console.log(response.data);  // Use response.data to access the response body
+        if (response.status === 200) {
+            alert("Password Updated Successfully");
+            console.log(response.data);
+          } else {
+            // Handle unexpected response status codes
+            console.error(`Unexpected status code: ${response.status}`);
+          }
+           // Use response.data to access the response body
 
         // Handle success, redirect, or display a message to the user
     } catch (err) {
