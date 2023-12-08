@@ -551,7 +551,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 async function downloadPDF() {
 
-  await axios.get("/expense/download", {
+  await axios.get("http://54.152.126.236/expense/download", {
     headers: { Authorization: token },
   })
     .then((response) => {
@@ -574,7 +574,7 @@ async function getAllExpenseLinks() {
     console.log("Button clicked!");
 
     try {
-      const response = await axios.get("/expense/getAllLinks", {
+      const response = await axios.get("http://54.152.126.236/expense/getAllLinks", {
         headers: { Authorization: token },
       });
 
