@@ -17,7 +17,7 @@ async function submitResetPassword(event) {
     }
 
     try {
-        const response = await axios.post(`/forgotPassword/updatePassword/${requestId}`, {
+        const response = await axios.post(`http://54.152.126.236/forgotPassword/updatePassword/${requestId}`, {
             password: confirmPassword,
         });
 

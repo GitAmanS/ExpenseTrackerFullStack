@@ -36,7 +36,7 @@ updateExpenseBalance();
 // async function deleteRow(btn, incomeId) {
 //   try {
 //     const response = await axios.delete(
-//       `/income/deleteIncome/${incomeId}`,
+//       `http://54.152.126.236/income/deleteIncome/${incomeId}`,
 //       { headers: { Authorization: token } }
 //     );
 //     updateIncomeBalance();
@@ -79,7 +79,7 @@ updateExpenseBalance();
 
 //   try {
 //     const response = await axios.post(
-//       "/income/addIncome",
+//       "http://54.152.126.236/income/addIncome",
 //       income,
 //       { headers: { Authorization: token } }
 //     );
@@ -120,7 +120,7 @@ window.addEventListener("DOMContentLoaded", () => {
     getAllExpenseLinks()
   }
   // axios
-  //   .get("/income/getAllIncomes", {
+  //   .get("http://54.152.126.236/income/getAllIncomes", {
   //     headers: { Authorization: token },
   //   })
   //   .then((res) => {
@@ -138,7 +138,7 @@ window.addEventListener("DOMContentLoaded", () => {
 async function buyPremium(e) {
   const token = localStorage.getItem("token");
   const res = await axios.get(
-    "/purchase/premiumMembership",
+    "http://54.152.126.236/purchase/premiumMembership",
     { headers: { Authorization: token } }
   );
   var options = {
@@ -147,7 +147,7 @@ async function buyPremium(e) {
     // This handler function will handle the success payment
     handler: async function (response) {
       const res = await axios.post(
-        "/purchase/updateTransactionStatus",
+        "http://54.152.126.236/purchase/updateTransactionStatus",
         {
           order_id: options.order_id,
           payment_id: response.razorpay_payment_id,
@@ -183,7 +183,7 @@ async function buyPremium(e) {
 async function fetchLeaderboardData() {
   try {
     const response = await axios.get(
-      "/premium/showLeaderBoard",
+      "http://54.152.126.236/premium/showLeaderBoard",
       { headers: { Authorization: token } }
     );
     return response.data.userLeaderboardDetails;
@@ -255,7 +255,7 @@ var sumOfIncome =0;
 var sumOfExpenses = 0;
 function updateIncomeBalance() {
   axios
-    .get("/income/getTotalIncomes", {
+    .get("http://54.152.126.236/income/getTotalIncomes", {
       headers: { Authorization: token },
     })
     .then((res) => {
@@ -282,7 +282,7 @@ function updateIncomeBalance() {
 
 function updateExpenseBalance() {
   axios
-    .get("/expense/getTotalExpenses", {
+    .get("http://54.152.126.236/expense/getTotalExpenses", {
       headers: { Authorization: token },
     })
     .then((res) => {
@@ -367,7 +367,7 @@ function addRowsToExpenseTable(Expense) {
 async function deleteExpenseRow(btn, ExpenseId) {
   try {
     const response = await axios.delete(
-      `/expense/deleteExpense/${ExpenseId}`,
+      `http://54.152.126.236/expense/deleteExpense/${ExpenseId}`,
       { headers: { Authorization: token } }
     );
     updateIncomeBalance();
@@ -411,7 +411,7 @@ async function addNewExpense(e) {
 
   try {
     const response = await axios.post(
-      "/expense/addExpense",
+      "http://54.152.126.236/expense/addExpense",
       Expense,
       { headers: { Authorization: token } }
     );
@@ -446,7 +446,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Function to fetch expenses based on page
   const fetchExpenses = async (page, perPage) => {
     try {
-      const response = await axios.get(`/expense/getAllExpenses?page=${page}&perPage=${perPage}`, {
+      const response = await axios.get(`http://54.152.126.236/expense/getAllExpenses?page=${page}&perPage=${perPage}`, {
         headers: { Authorization: token },
       });
 

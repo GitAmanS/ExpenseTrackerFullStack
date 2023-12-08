@@ -9,7 +9,7 @@ async function sendEmail (event) {
     console.log(email);
 
     // Send a POST request to the server
-    const response = await axios.post('/forgotPassword/', {
+    const response = await axios.post('http://54.152.126.236/forgotPassword/', {
         email: email, 
     });
 
