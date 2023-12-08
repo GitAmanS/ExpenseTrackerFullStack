@@ -12,6 +12,7 @@ const bcrypt = require("bcrypt");
 
 const forgotPassword = async (req, res) => {
     // Initialize the Sendinblue API client
+    console.log("this is api", process.env.API_KEY);
     const defaultClient = SibApiV3Sdk.ApiClient.instance;
     const apiKey = defaultClient.authentications['api-key'];
     apiKey.apiKey = process.env.API_KEY;

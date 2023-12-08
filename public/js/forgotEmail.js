@@ -9,7 +9,7 @@ async function sendEmail (event) {
     console.log(email);
 
     // Send a POST request to the server
-    try {
+    
         const response = await axios.post('http://54.152.126.236:3000/forgotPassword/', {
           email: email, 
         });
@@ -19,12 +19,11 @@ async function sendEmail (event) {
           console.log(response.data);
         } else {
           // Handle unexpected response status codes
-          console.error(`Unexpected status code: ${response.status}`);
+          console.error(`Unexpected status code: ${response}`);
         }
-      } catch (error) {
-        // Handle errors, e.g., network issues, timeouts, etc.
-        console.error('An error occurred:', error);
-      }
+
+        console.log(response);
+      
       
     // .then(function (response) {
     //     // Handle the success response (optional)

@@ -30,6 +30,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
 const app = express();
+console.log("Environment Variables:", process.env.DB_HOST);
 
 
 
@@ -72,10 +73,10 @@ const certificate = fs.readFileSync('server.cer');
 // console.log("Environment Variables:", process.env);
 // console.log("Database Connection Configuration:", sequelize.config);
 
-// console.log("DB_NAME:", process.env.DB_NAME);
-// console.log("DB_USERNAME:", process.env.DB_USERNAME);
-// console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
-// console.log("DB_HOST:", process.env.DB_HOST);
+console.log("DB_NAME:", process.env.DB_NAME);
+console.log("DB_USERNAME:", process.env.DB_USERNAME);
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
+console.log("DB_HOST:", process.env.DB_HOST);
 
 sequelize
   .sync()
