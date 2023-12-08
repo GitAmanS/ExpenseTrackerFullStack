@@ -36,7 +36,7 @@ updateExpenseBalance();
 // async function deleteRow(btn, incomeId) {
 //   try {
 //     const response = await axios.delete(
-//       `http://54.152.126.236/income/deleteIncome/${incomeId}`,
+//       `http://54.152.126.236:3000/income/deleteIncome/${incomeId}`,
 //       { headers: { Authorization: token } }
 //     );
 //     updateIncomeBalance();
@@ -79,7 +79,7 @@ updateExpenseBalance();
 
 //   try {
 //     const response = await axios.post(
-//       "http://54.152.126.236/income/addIncome",
+//       "http://54.152.126.236:3000/income/addIncome",
 //       income,
 //       { headers: { Authorization: token } }
 //     );
@@ -120,7 +120,7 @@ window.addEventListener("DOMContentLoaded", () => {
     getAllExpenseLinks()
   }
   // axios
-  //   .get("http://54.152.126.236/income/getAllIncomes", {
+  //   .get("http://54.152.126.236:3000/income/getAllIncomes", {
   //     headers: { Authorization: token },
   //   })
   //   .then((res) => {
@@ -138,7 +138,7 @@ window.addEventListener("DOMContentLoaded", () => {
 async function buyPremium(e) {
   const token = localStorage.getItem("token");
   const res = await axios.get(
-    "http://54.152.126.236/purchase/premiumMembership",
+    "http://54.152.126.236:3000/purchase/premiumMembership",
     { headers: { Authorization: token } }
   );
   var options = {
@@ -147,7 +147,7 @@ async function buyPremium(e) {
     // This handler function will handle the success payment
     handler: async function (response) {
       const res = await axios.post(
-        "http://54.152.126.236/purchase/updateTransactionStatus",
+        "http://54.152.126.236:3000/purchase/updateTransactionStatus",
         {
           order_id: options.order_id,
           payment_id: response.razorpay_payment_id,
@@ -183,7 +183,7 @@ async function buyPremium(e) {
 async function fetchLeaderboardData() {
   try {
     const response = await axios.get(
-      "http://54.152.126.236/premium/showLeaderBoard",
+      "http://54.152.126.236:3000/premium/showLeaderBoard",
       { headers: { Authorization: token } }
     );
     return response.data.userLeaderboardDetails;
@@ -255,7 +255,7 @@ var sumOfIncome =0;
 var sumOfExpenses = 0;
 function updateIncomeBalance() {
   axios
-    .get("http://54.152.126.236/income/getTotalIncomes", {
+    .get("http://54.152.126.236:3000/income/getTotalIncomes", {
       headers: { Authorization: token },
     })
     .then((res) => {
@@ -282,7 +282,7 @@ function updateIncomeBalance() {
 
 function updateExpenseBalance() {
   axios
-    .get("http://54.152.126.236/expense/getTotalExpenses", {
+    .get("http://54.152.126.236:3000/expense/getTotalExpenses", {
       headers: { Authorization: token },
     })
     .then((res) => {
@@ -367,7 +367,7 @@ function addRowsToExpenseTable(Expense) {
 async function deleteExpenseRow(btn, ExpenseId) {
   try {
     const response = await axios.delete(
-      `http://54.152.126.236/expense/deleteExpense/${ExpenseId}`,
+      `http://54.152.126.236:3000/expense/deleteExpense/${ExpenseId}`,
       { headers: { Authorization: token } }
     );
     updateIncomeBalance();
@@ -411,7 +411,7 @@ async function addNewExpense(e) {
 
   try {
     const response = await axios.post(
-      "http://54.152.126.236/expense/addExpense",
+      "http://54.152.126.236:3000/expense/addExpense",
       Expense,
       { headers: { Authorization: token } }
     );
@@ -446,7 +446,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Function to fetch expenses based on page
   const fetchExpenses = async (page, perPage) => {
     try {
-      const response = await axios.get(`http://54.152.126.236/expense/getAllExpenses?page=${page}&perPage=${perPage}`, {
+      const response = await axios.get(`http://54.152.126.236:3000/expense/getAllExpenses?page=${page}&perPage=${perPage}`, {
         headers: { Authorization: token },
       });
 
@@ -551,7 +551,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 async function downloadPDF() {
 
-  await axios.get("http://54.152.126.236/expense/download", {
+  await axios.get("http://54.152.126.236:3000/expense/download", {
     headers: { Authorization: token },
   })
     .then((response) => {
@@ -574,7 +574,7 @@ async function getAllExpenseLinks() {
     console.log("Button clicked!");
 
     try {
-      const response = await axios.get("http://54.152.126.236/expense/getAllLinks", {
+      const response = await axios.get("http://54.152.126.236:3000/expense/getAllLinks", {
         headers: { Authorization: token },
       });
 
