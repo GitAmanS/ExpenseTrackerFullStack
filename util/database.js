@@ -1,13 +1,11 @@
 const Sequelize = require("sequelize");
 
-console.log("DB_NAME:", process.env.DB_NAME);
-console.log("DB_USERNAME:", process.env.DB_USERNAME);
-console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
-console.log("DB_HOST:", process.env.DB_HOST);
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+
+const sequelize = new Sequelize('ExpenseTracker', 'admin', 'Aman8624$', {
+  
   dialect: "mysql",
-  host: process.env.DB_HOST,
-});
+  host: 'database-2.cxmtgoj1no82.us-east-1.rds.amazonaws.com',
+},);
 
 module.exports = sequelize;
