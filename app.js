@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const fs = require("fs");
@@ -26,12 +28,12 @@ const compression = require("compression");
 const morgan = require("morgan");
 
 
-const dotenv = require("dotenv");
-dotenv.config();
+
 const cors = require("cors");
 const app = express();
 console.log("Environment Variables:", process.env.DB_HOST);
 
+const port = process.env.PORT;
 
 
 app.use(express.static("public"));

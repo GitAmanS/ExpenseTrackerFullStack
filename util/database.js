@@ -2,20 +2,26 @@ const Sequelize = require("sequelize");
 
 
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+// const sequelize = new Sequelize(
+//   process.env.DB_NAME,
+//   process.env.DB_USERNAME,
+//   process.env.DB_PASSWORD,
+//   {
+//     host: process.env.DB_HOST,
+//     dialect: 'mysql', 
+//   }
+// );
+
+
+
+// module.exports = sequelize;
+const sequelize = new Sequelize('ExpenseTracker', 'admin', 'Aman8624$', {
   
   dialect: "mysql",
-  host: process.env.DB_HOST,
+  host: 'database-2.cxmtgoj1no82.us-east-1.rds.amazonaws.com',
 },);
 
 module.exports = sequelize;
-// const sequelize = new Sequelize('ExpenseTracker', 'admin', 'Aman8624$', {
-  
-//   dialect: "mysql",
-//   host: 'database-2.cxmtgoj1no82.us-east-1.rds.amazonaws.com',
-// },);
-
-// module.exports = sequelize;
 
 
 // const Sequelize = require("sequelize");
