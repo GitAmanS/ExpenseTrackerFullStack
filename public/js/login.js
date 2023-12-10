@@ -21,7 +21,7 @@ async function loginForm(e) {
   const password = e.target.loginPassword.value;
 
   try {
-    const response = await axios.post("http://54.152.126.236:3000/user/login", {
+    const response = await axios.post("http://52.90.240.95:3000/user/login", {
       email,
       password,
     });
